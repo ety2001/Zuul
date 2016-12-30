@@ -1,6 +1,8 @@
 // Room.cpp
 
 #include "Room.h"
+#include <string.h>
+
 Room::Room(char roomDescription[]){
 	strcpy(description, roomDescription);
 };
@@ -14,7 +16,7 @@ Room* Room::getExit(Direction dir){
 		return exits[dir];
 	}
 	else{
-		return null;
+		return NULL;
 	}
 };
 
@@ -24,19 +26,27 @@ void Room::addExit(Direction dir, Room* room){
 
 Item* Room::getItem(char name[]){
 	int i;
-	for (i=0; i<items.size; i++){
+	for (i=0; i<items.size(); i++){
 		if (strcmp(name, items[i]->getName())==0){
 			break;
 		}
 	}
-	if(i == items.size){
-		return null;
+	if(i == items.size()){
+		return NULL;
 	}
 	Item* item = items[i];
 	items.erase(items.begin()+i);
 	return item;
 };
 
-void Room::dropitem(Item* item);
+void Room::dropItem(Item* item){
 	items.push_back(item);
+};
+
+vector<Item*> Room::roomItems(){
+	return items;
+};
+
+map<Direction,Room*> Room::roomExits(){
+	return exits;
 };

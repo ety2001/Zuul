@@ -1,10 +1,12 @@
 // Item.cpp
 
 #include "Item.h"
-Item::Item(Char itemName){
+#include <string.h>
+
+Item::Item(char itemName[]){
 	strcpy(name, itemName);
 };
 
-char Item::getName(){
+char* Item::getName(){
 	return name;
 }; 
