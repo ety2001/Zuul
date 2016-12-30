@@ -1,4 +1,6 @@
 // main.cpp
+// Program by Elaine Yang 12/29
+// Pokemon themed Zuul game
 
 #include <iostream>
 #include <vector>
@@ -95,7 +97,9 @@ int main() {
 	
 	//add items
 	item = new Item("Pokedex");
+cout <<"create one successfully" << endl;
 	rooms[0]->dropItem(item);
+cout <<"add one successfully" << endl;
 	
 	item = new Item("Mine Badge");
 	rooms[1]->dropItem(item);
@@ -121,11 +125,19 @@ int main() {
 	item = new Item("Beacon Badge");
 	rooms[13]->dropItem(item);
 
-	Room* curRoom = rooms[0];
+cout <<"before curRoom" << endl;
+	Room* curRoom = rooms[0];	
+	char input[50];
+
+cout << "before while" << endl;
+	
 	while(1){
+		// print current room info
 		cout << "You arrive at " << curRoom->getDescription() << endl;
+		// print exits
 		cout << "There are exits:" << endl;
-		map<Direction,Room*> roomExits = currRoom->roomExits();
+cout << "before map" << endl;
+		map<Direction,Room*> roomExits = curRoom->roomExits();
 		for (map<Direction,Room*>::iterator it = roomExits.begin(); it!= roomExits.end(); it++){
 			if(it->first == North){
 				cout << "NORTH ";
@@ -141,11 +153,98 @@ int main() {
 			}
 		}
 		cout << endl;
+		// print item(s)
+cout << "before items" << endl;
 		cout << "There are item(s):" << endl;
-		vector<Item*> roomItems = currRoom->roomItems();
+		vector<Item*> roomItems = curRoom->roomItems();
 		for (int i = 0; i < roomItems.size(); i++){
 			cout << roomItems[i]->getName() << " ";
 		}
-		cout << endl;
-	}
+		if(curRoom == rooms[14]){
+			if(bag.size() == 9){
+				cout << "You beat the Elite 4! Congratulations League Champion!" << endl;
+			}
+			else{
+				cout << "All your pokemon fainted. Feels bad man." << endl;
+			}
+			break;
+		}
+		cout << endl << "You can choose to [DROP] an item, [GRAB] an item, or pick a [DIRECTION] to travel." << endl;
+		// take in user input
+		cin.getline(input,50);
+		// drop an item
+		if(strcmp(input, "DROP")==0){
+			cout << "You currently have:";
+			for (int i = 0; i < bag.size(); i++){
+				cout << " " << bag[i]->getName();
+			}
+			cout << endl << "What item would you like to drop?" << endl;
+			cin.getline(input,50);
+			int i;
+			for (i = 0; i < bag.size(); i++){
+				if(strcmp(bag[i]->getName(),input)==0){
+					curRoom->dropItem(bag[i]);
+					cout << input << " dropped." << endl;
+					break;
+				}
+			}
+			if(i == bag.size()){
+				cout << "Item is invalid." << endl;
+			}
+			else{
+				bag.erase(bag.begin()+i);
+			}
+		}
+		else if(strcmp(input, "GRAB")==0){
+			cout << "What item would you like to grab?" << endl;
+			cin.getline(input,50);
+			Item* grabbedItem = curRoom->getItem(input);
+			if(grabbedItem == NULL){
+				cout << "Item is invalid." << endl;
+			}
+			else{
+				bag.push_back(grabbedItem);
+				cout << input << " grabbed." << endl;
+			}
+		}
+		else if(strcmp(input, "NORTH")==0){
+			Room* destination = curRoom->getExit(North);
+			if(destination == NULL){
+				cout << "There is no path NORTH." << endl;
+			}
+			else{
+				curRoom = destination;
+			}
+		}
+		else if(strcmp(input, "EAST")==0){
+			Room* destination = curRoom->getExit(East);
+			if(destination == NULL){
+				cout << "There is no path EAST." << endl;
+			}
+			else{
+				curRoom = destination;
+			}
+		}
+		else if(strcmp(input, "SOUTH")==0){
+			Room* destination = curRoom->getExit(South);
+			if(destination == NULL){
+				cout << "There is no path SOUTH." << endl;
+			}
+			else{
+				curRoom = destination;
+			}
+		}
+		else if(strcmp(input, "WEST")==0){
+			Room* destination = curRoom->getExit(West);
+			if(destination == NULL){
+				cout << "There is no path WEST." << endl;
+			}
+			else{
+				curRoom = destination;
+			}
+		}
+		else{
+			cout << "Command invalid." << endl;
+		}
+	}		
 }
