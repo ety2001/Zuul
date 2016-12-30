@@ -97,9 +97,7 @@ int main() {
 	
 	//add items
 	item = new Item("Pokedex");
-cout <<"create one successfully" << endl;
 	rooms[0]->dropItem(item);
-cout <<"add one successfully" << endl;
 	
 	item = new Item("Mine Badge");
 	rooms[1]->dropItem(item);
@@ -125,18 +123,14 @@ cout <<"add one successfully" << endl;
 	item = new Item("Beacon Badge");
 	rooms[13]->dropItem(item);
 
-cout <<"before curRoom" << endl;
 	Room* curRoom = rooms[0];	
 	char input[50];
 
-cout << "before while" << endl;
-	
 	while(1){
 		// print current room info
 		cout << "You arrive at " << curRoom->getDescription() << endl;
 		// print exits
 		cout << "There are exits:" << endl;
-cout << "before map" << endl;
 		map<Direction,Room*> roomExits = curRoom->roomExits();
 		for (map<Direction,Room*>::iterator it = roomExits.begin(); it!= roomExits.end(); it++){
 			if(it->first == North){
@@ -153,13 +147,7 @@ cout << "before map" << endl;
 			}
 		}
 		cout << endl;
-		// print item(s)
-cout << "before items" << endl;
-		cout << "There are item(s):" << endl;
-		vector<Item*> roomItems = curRoom->roomItems();
-		for (int i = 0; i < roomItems.size(); i++){
-			cout << roomItems[i]->getName() << " ";
-		}
+		// check for win lose conditions
 		if(curRoom == rooms[14]){
 			if(bag.size() == 9){
 				cout << "You beat the Elite 4! Congratulations League Champion!" << endl;
@@ -168,6 +156,12 @@ cout << "before items" << endl;
 				cout << "All your pokemon fainted. Feels bad man." << endl;
 			}
 			break;
+		}
+		// print item(s)
+		cout << "There are item(s):" << endl;
+		vector<Item*> roomItems = curRoom->roomItems();
+		for (int i = 0; i < roomItems.size(); i++){
+			cout << roomItems[i]->getName() << " ";
 		}
 		cout << endl << "You can choose to [DROP] an item, [GRAB] an item, or pick a [DIRECTION] to travel." << endl;
 		// take in user input
@@ -195,6 +189,7 @@ cout << "before items" << endl;
 				bag.erase(bag.begin()+i);
 			}
 		}
+		// grab an item
 		else if(strcmp(input, "GRAB")==0){
 			cout << "What item would you like to grab?" << endl;
 			cin.getline(input,50);
@@ -207,6 +202,7 @@ cout << "before items" << endl;
 				cout << input << " grabbed." << endl;
 			}
 		}
+		// go north
 		else if(strcmp(input, "NORTH")==0){
 			Room* destination = curRoom->getExit(North);
 			if(destination == NULL){
@@ -216,6 +212,7 @@ cout << "before items" << endl;
 				curRoom = destination;
 			}
 		}
+		// go east
 		else if(strcmp(input, "EAST")==0){
 			Room* destination = curRoom->getExit(East);
 			if(destination == NULL){
@@ -225,6 +222,7 @@ cout << "before items" << endl;
 				curRoom = destination;
 			}
 		}
+		// go south
 		else if(strcmp(input, "SOUTH")==0){
 			Room* destination = curRoom->getExit(South);
 			if(destination == NULL){
@@ -234,6 +232,7 @@ cout << "before items" << endl;
 				curRoom = destination;
 			}
 		}
+		//go west
 		else if(strcmp(input, "WEST")==0){
 			Room* destination = curRoom->getExit(West);
 			if(destination == NULL){

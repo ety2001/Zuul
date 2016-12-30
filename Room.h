@@ -14,7 +14,7 @@ enum Direction{
 };
 
 class Room{
-	char description[100];
+	char description[500];
 	vector<Item*> items;
 	map<Direction,Room*> exits;
 	public:
