@@ -1,4 +1,6 @@
 // Room.cpp
+// creates rooms, each with a description and possible exits
+// can also pick up/drop items into a room
 
 #include "Room.h"
 #include <string.h>
