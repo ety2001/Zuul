@@ -1,5 +1,5 @@
 // Item.h
-
+// item class that has a name
 class Item{
 	char name[100];
 	public:
