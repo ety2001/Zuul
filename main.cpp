@@ -1,6 +1,7 @@
 // main.cpp
 // Program by Elaine Yang 12/29
 // Pokemon themed Zuul game
+// walk around the cities and towns of gen4! pick up and drop badges wherever u go!! 
 
 #include <iostream>
 #include <vector>
