@@ -1,4 +1,5 @@
 // Item.cpp
+// implementation of the item class, creates new items and gets names of existing
 
 #include "Item.h"
 #include <string.h>
