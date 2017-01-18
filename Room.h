@@ -1,5 +1,5 @@
 // Room.h
-
+// room class with description, items, exits
 #include "Item.h"
 #include <vector>
 #include <map>
